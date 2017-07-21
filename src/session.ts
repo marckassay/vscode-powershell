@@ -367,6 +367,13 @@ export class SessionManager implements Middleware {
                     (resolve, reject) => {
                         var socket = net.connect(port);
                         socket.on(
+                            'error',
+                            () => {
+                                this.log.write("Language service unable to connect.");
+                                reject();
+                            }
+                        )
+                        socket.on(
                             'connect',
                             () => {
                                 this.log.write("Language service connected.");
